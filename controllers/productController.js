@@ -27,7 +27,7 @@ const createProduct = asyncHandler(async (req,res) => {
   
   const updateProduct = asyncHandler(async (req,res) => {
     const {name, price, storeId, gtin, qrCode}=req.body
-    const {productId}=req.paramas
+    const {productId}=req.params
     const updatedProduct = await prisma.product.update({
       where: {
         id: productId,
