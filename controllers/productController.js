@@ -10,6 +10,16 @@ const createProduct = asyncHandler(async (req,res) => {
         storeId,
         gtin,
         qrCode,
+        tags: {
+          create: tags.map(tagName => ({
+            tag: {
+              connectOrCreate: {
+                where: { name: tagName },
+                create: { name: tagName },
+              },
+            },
+          })),
+        },
       },
     });
     return res.status(201).json({message:"Product created successfully"});

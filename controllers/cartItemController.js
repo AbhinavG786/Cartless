@@ -26,6 +26,56 @@ const createCartItem =asyncHandler(async (req,res) => {
     return res.status(200).json({message:"Cart item fetched successfully"});
   });
   
+  const getCartRecommendationsByTags = asyncHandler(async (req, res) => {
+    const { cartId } = req.params;
+  
+    // Step 1: Get products in the cart
+    const cartItems = await prisma.cartItem.findMany({
+      where: { cartId },
+      include: {
+        product: {
+          include: {
+            tags: {
+              include: { tag: true },
+            },
+          },
+        },
+      },
+    });
+  
+    const productIdsInCart = cartItems.map(item => item.productId);
+  
+    // Step 2: Get tag names used in the cart
+    const tagNames = [
+      ...new Set(
+        cartItems.flatMap(item =>
+          item.product.tags.map(pt => pt.tag.name)
+        )
+      ),
+    ];
+  
+    // Step 3: Find products with those tags not in the cart
+    const recommendedProducts = await prisma.product.findMany({
+      where: {
+        id: { notIn: productIdsInCart },
+        tags: {
+          some: {
+            tag: {
+              name: { in: tagNames },
+            },
+          },
+        },
+      },
+      include: { tags: { include: { tag: true } } },
+      take: 10,
+    });
+  
+    return res.status(200).json({
+      message: "Tag-based recommendations fetched successfully",
+      recommendations: recommendedProducts,
+    });
+  });
+
   const updateCartItemQuantity = asyncHandler(async (req,res) => {
     const {quantity}=req.body
     const {cartItemId}=req.params
@@ -52,4 +102,4 @@ const createCartItem =asyncHandler(async (req,res) => {
   
   
   
-  export {createCartItem,getCartItemById,updateCartItemQuantity,deleteCartItem}
+  export {createCartItem,getCartItemById,getCartRecommendationsByTags,updateCartItemQuantity,deleteCartItem}
