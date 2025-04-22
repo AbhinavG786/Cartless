@@ -4,6 +4,7 @@ import {cartItemRoutes} from "./cartItemRoutes.js"
 import {cartRoutes} from "./cartRoutes.js"
 import {orderRoutes} from "./orderRoutes.js"
 import {productRoutes} from "./productRoutes.js"
+import {authRoutes} from "./authRoutes.js"
 
 const router=Router()
 router.use("/",userRoutes)
@@ -11,5 +12,6 @@ router.use("/",cartItemRoutes)
 router.use("/",cartRoutes)
 router.use("/",orderRoutes)
 router.use("/",productRoutes)
+router.use("/",authRoutes)
 
-export {userRoutes,cartItemRoutes,cartRoutes,orderRoutes,productRoutes}
+export {userRoutes,cartItemRoutes,cartRoutes,orderRoutes,productRoutes,authRoutes}
