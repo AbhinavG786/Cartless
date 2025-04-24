@@ -1,10 +1,10 @@
 import { Router } from "express";
-import {userRoutes} from "./userRoutes.js" 
-import {cartItemRoutes} from "./cartItemRoutes.js"
-import {cartRoutes} from "./cartRoutes.js"
-import {orderRoutes} from "./orderRoutes.js"
-import {productRoutes} from "./productRoutes.js"
-import {authRoutes} from "./authRoutes.js"
+import userRoutes from "./userRoutes.js" 
+import cartItemRoutes from "./cartItemRoutes.js"
+import cartRoutes from "./cartRoutes.js"
+import orderRoutes from "./orderRoutes.js"
+import productRoutes from "./productRoutes.js"
+import authRoutes from "./authRoutes.js"
 
 const router=Router()
 router.use("/",userRoutes)
