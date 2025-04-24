@@ -35,12 +35,13 @@ model CartItem {
 }
 
 model Product {
-  id       String     @id @default(uuid())
+  id       String       @id @default(uuid())
   name     String
   price    Float
   storeId  String
-  gtin     String     @unique
+  gtin     String       @unique
   qrCode   String?
+  tags     ProductTag[]
   CartItem CartItem[]
 }
 
@@ -50,4 +51,20 @@ model Order {
   totalPrice Float
   createdAt  DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id])
+}
+
+model Tag {
+  id       String       @id @default(uuid())
+  name     String       @unique
+  products ProductTag[]
+}
+
+model ProductTag {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  tag       Tag     @relation(fields: [tagId], references: [id])
+  tagId     String
+
+  @@unique([productId, tagId])
 }
