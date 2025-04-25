@@ -51,7 +51,7 @@ const loginUser=asyncHandler(async(req,res)=>{
           .status(400)
           .json({ message: "All fields are required" });
     const user=await prisma.user.findUnique({
-        where:email
+        where:{email}
     })
     if (!user)
         return res
