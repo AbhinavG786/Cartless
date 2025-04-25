@@ -66,4 +66,38 @@ const deleteProduct = asyncHandler(async (req, res) => {
   return res.status(204);
 });
 
-export { createProduct, getProductByGtin, updateProduct, deleteProduct };
+const searchProducts = asyncHandler(async (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+    return res.status(400).json({ error: "Query is required" });
+  }
+
+  const products = await prisma.product.findMany({
+    where: {
+      OR: [
+        {
+          name: {
+            contains: query,
+            mode: 'insensitive',
+          },
+        },
+        {
+          store: {
+            name: {
+              contains: query,
+              mode: 'insensitive',
+            },
+          },
+        },
+      ],
+    },
+    include: {
+      store: true,
+    },
+  });
+  
+ return res.status(200).json({products});
+});
+
+export { createProduct, getProductByGtin, updateProduct, deleteProduct,searchProducts };

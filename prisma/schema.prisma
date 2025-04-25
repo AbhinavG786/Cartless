@@ -43,6 +43,7 @@ model Product {
   qrCode   String?
   tags     ProductTag[]
   CartItem CartItem[]
+  store    Store        @relation(fields: [storeId], references: [id])
 }
 
 model Order {
@@ -67,4 +68,10 @@ model ProductTag {
   tagId     String
 
   @@unique([productId, tagId])
+}
+
+model Store {
+  id       String    @id @default(uuid())
+  name     String
+  products Product[]
 }
