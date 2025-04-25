@@ -41,7 +41,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json({ message: "User registered successfully", token: accessToken });
+    .json({ message: "User registered successfully", user,token: accessToken });
 });
 
 const loginUser=asyncHandler(async(req,res)=>{
@@ -69,7 +69,7 @@ const loginUser=asyncHandler(async(req,res)=>{
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: process.env.ACCESS_TOKEN_EXPIRY },
       );
-      return res.status(200).json({message:"User logged in successfully",token:accessToken})
+      return res.status(200).json({message:"User logged in successfully",user,token:accessToken})
 })
 
 

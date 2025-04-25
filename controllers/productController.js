@@ -22,7 +22,7 @@ const createProduct = asyncHandler(async (req, res) => {
       },
     },
   });
-  return res.status(201).json({ message: "Product created successfully" });
+  return res.status(201).json({ message: "Product created successfully" },product);
 });
 
 const getProductByGtin = asyncHandler(async (req, res) => {

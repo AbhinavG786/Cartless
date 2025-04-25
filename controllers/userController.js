@@ -13,7 +13,8 @@ const createUser = asyncHandler(async (req,res) => {
   });
 
   const getUserById = asyncHandler(async (req,res) => {
-    const {userId}=req.params
+    // const {userId}=req.params
+    const userId = req.user.userId;
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
@@ -23,7 +24,23 @@ const createUser = asyncHandler(async (req,res) => {
         Order: true,
       },
     });
-    return res.status(200).json({message:"User fetched successfully"});
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+  
+    return res.status(200).json({
+      message: "User fetched successfully",
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        cart: user.cart,
+        Order: user.Order,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      },
+    });
+    // return res.status(200).json({message:"User fetched successfully"});
   });
 
   const updateUser = asyncHandler(async (req,res) => {

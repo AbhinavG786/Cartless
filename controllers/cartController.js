@@ -2,17 +2,17 @@ import prisma from "../utils/prisma.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const createCart = asyncHandler(async (req,res) => {
-    const {userId}=req.body
+  const userId = req.user.userId;
     const cart = await prisma.cart.create({
       data: {
         userId,
       },
     });
-    return res.status(201).json({message:"Cart created successfully"});
+    return res.status(201).json({message:"Cart created successfully",cart});
   });
 
   const getCartForUser = asyncHandler(async (req,res) => {
-    const {userId}=req.params
+    const userId = req.user.userId;
     const cart = await prisma.cart.findUnique({
       where: {
         userId,
@@ -25,7 +25,7 @@ const createCart = asyncHandler(async (req,res) => {
         },
       },
     });
-    return res.status(200).json("Cart fetched successfully");
+    return res.status(200).json({message:"Cart fetched successfully",cart});
   });
   
 
