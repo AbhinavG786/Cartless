@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { name,email, password } = req.body;
   const errors = [];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
@@ -27,6 +27,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const user = await prisma.user.create({
     data: {
+      name,
       email,
       password: hashedPassword,
     },
