@@ -47,11 +47,12 @@ model Product {
 }
 
 model Order {
-  id         String   @id @default(uuid())
-  userId     String
-  totalPrice Float
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
+  id                String   @id @default(uuid())
+  userId            String
+  totalPrice        Float
+  paymentSuccessful Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  user              User     @relation(fields: [userId], references: [id])
 }
 
 model Tag {

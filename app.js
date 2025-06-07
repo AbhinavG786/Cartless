@@ -8,6 +8,7 @@ import {
   productRoutes,
   authRoutes,
   storeRoutes,
+  paymentRoutes
 } from "./routes/index.js";
 
 const app = express();
@@ -25,5 +26,6 @@ app.use("/orders", orderRoutes);
 app.use("/cart-items", cartItemRoutes);
 app.use("/carts", cartRoutes);
 app.use("/store", storeRoutes);
+app.use("/payment", paymentRoutes);
 
 export default app;
